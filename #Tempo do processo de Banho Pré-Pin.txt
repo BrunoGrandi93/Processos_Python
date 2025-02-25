@@ -1,0 +1,55 @@
+#Tempo do processo de Banho Pré-Pintura é de 20 minutos absolutos, sendo rateados pela quantidade de peças que serão mergulhadas no banho.
+#Dimensões com base nos tanques de pré-pintura da Gelus: 1,2 metros de largura, 1,4 metros de altura e 3,0 metros de comprimento.
+import math
+from math import pi as PI
+
+processo = 'Banho Pré-Pintura'
+
+# Volume de Peças para banho
+quantidade_peca = record.quantity_production
+
+#Dimensões da Piscina de Banho (M)
+banho_comp = 3
+banho_larg = 1.4
+banho_alt = 1.2
+banho_vol = banho_comp * banho_larg * banho_alt
+
+# Espaço Ocupado da peça no banho por tipo de peça.
+sem_tipo = False
+tipo_peca = record.tipo
+
+if tipo_peca == "Arame":
+  peca_vol = record.o/1000 * record.c/1000 * PI * 1.2
+elif tipo_peca == "Barra Chata":
+  peca_vol = record.c/1000 * record.e/1000 * record.l/1000 * 1.2
+elif tipo_peca == "Barra Redonda":
+  peca_vol = record.o/1000 * record.c/1000 * PI * 1.2
+elif tipo_peca == "Caixa":
+  peca_vol = record.c/1000 * record.l/1000 * record.a/1000 * 1.2
+elif tipo_peca == "Chapa":
+  peca_vol = record.c/1000 * record.l/1000 * 1.2
+elif tipo_peca == "Perfil":
+  peca_vol = record.c/1000 * record.a/1000 * record.l/1000 * 1.2
+elif tipo_peca == "Tubo Quad/Ret":
+  peca_vol = record.c/1000 * record.a/1000 * record.l/1000 * 1.2
+elif tipo_peca == "Tubo Redondo":
+  peca_vol = record.o/1000 * record.c/1000 * PI * 1.2
+else:
+  sem_tipo = True
+  tipo_peca = 'Indefinido'
+
+#Print do Resultado
+if sem_tipo == False:
+  quantidade_banho = math.ceil(quantidade_peca * peca_vol / banho_vol) # numero de banhos
+  tempo = quantidade_banho * 20/60 / quantidade_peca  #Tempo 
+  record.tempo_do_process = tempo   #Salvando Tempo
+  
+  print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+  print_infos = ' Tipo da Peça: ' + str(tipo_peca) + '\n Número de Banhos Total de Produção: ' + str(quantidade_banho)
+  print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+  print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo
+  
+else:
+  print_output = 'Erro de Calculo: Tipo da Peça Não determinado ' + str(tipo_peca) + " " + str(type(tipo_peca))
+  
+console.output = print_output 

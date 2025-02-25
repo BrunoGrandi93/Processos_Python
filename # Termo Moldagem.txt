@@ -1,0 +1,21 @@
+# Termo Moldagem
+processo = 'Termo Moldagem'
+
+QMolde = console.input("Digite a quantidade de peças por molde [Padrão = 8].")
+QMolde = float(QMolde)
+
+Tcola = 60 #'Tempo de aplicação da cola em spray antes do processo.
+Tmolde = 180 #'Tempo de moldagem médio da peça.
+TAcab = 60 #'Tempo de corte e acabamento médio da peça
+
+tempo = (Tcola/QMolde + Tmolde/QMolde + TAcab/QMolde) / 3600 #Tempo em Horas do Processo
+
+record.tempo_do_process = tempo #Salvar dados no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Parâmetro de Moldagem de Uma Peça Individual: \n Quantidade de Peças por Molde: ' + str(QMolde).replace(".", ",") + '\n Tempo de Colagem (seg): ' + str(Tcola) + '\n Tempo de Moldagem (seg): ' + str(Tmolde) + '\n Tempo de Acabamento (seg): ' + str(TAcab)
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

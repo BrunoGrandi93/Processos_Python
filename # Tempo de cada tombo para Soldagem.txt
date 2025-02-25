@@ -1,0 +1,19 @@
+# Tempo de cada tombo para Soldagem é de 1 segundo.
+processo = 'Solda Projeção Manual'
+
+quant_pt_solda = console.input("Digite a Quantidade de Pontos de Soldas: ")
+num_tombos = console.input("Digite o Número de Tombos Para Soldar a Peça: ")
+
+quant_pt_solda = float(quant_pt_solda)
+num_tombos = float(num_tombos)
+
+tempo = (3/1000/0.506 * quant_pt_solda + 3/1000 * quant_pt_solda/0.2 + num_tombos * 0.01667)/60
+record.tempo_do_process = tempo #Salvando tempo no Modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = '\nParametros de Soldagem: \n 1- Quantidade de pontos de solda: ' + str(quant_pt_solda) + '\n 2- Número de tombos: ' + str(num_tombos)
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

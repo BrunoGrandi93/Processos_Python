@@ -1,0 +1,16 @@
+#Tempo do processo de Corte Guilhotina de Metal para chapas é de 7 segundos por corte.
+processo = 'Corte Guilhotina de Metal'
+
+quantidade = console.input("Digite o número de cortes por peça: ")
+vel_corte = 7  #seg por corte
+
+tempo = (vel_corte / 3600) * int(quantidade)  #Calculando tempo por de corte por peça
+record.tempo_do_process = tempo # Salvando resultado no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Número de Cortes por Peça: ' + str(quantidade) + '\n Tempo de Cada Corte (segundos): ' + str(vel_corte)
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

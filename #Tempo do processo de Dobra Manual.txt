@@ -1,0 +1,17 @@
+#Tempo do processo de Dobra Manual de Tubo é 120 segundos por dobra.
+processo = 'Dobra Manual Tubo'
+
+quantidade = console.input("Digite o número de dobras por peça: ")
+
+tempo_peca = 120           #tempo por peça segundos
+tempo = tempo_peca * float(quantidade) / 3600   #conversao para horas 
+
+record.tempo_do_process = tempo #Salvar dados no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Tempo de Dobra por Peça (seg): ' + str(tempo_peca).replace(".", ",") + '\n Número de Dobras por Peça: ' + str(quantidade)
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

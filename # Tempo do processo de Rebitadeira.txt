@@ -1,0 +1,15 @@
+# Tempo do processo de Rebitadeira Pneumática Manual é de 10 minutos.
+processo = 'Rebitadeira Pneumática Manual'
+
+tempo_peca = 30           #tempo por peça segundos
+tempo = tempo_peca/3600   #conversao para horas 
+
+record.tempo_do_process = tempo #Salvar dados no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Tempo Padrão do Processo por Peça (min): ' + str(tempo_peca).replace(".", ",")
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

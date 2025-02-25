@@ -1,0 +1,26 @@
+#Tempo do processo de Corte Guilhotina: Para cada corte 7 segs menor que 1m. Para cada corte maior que 1m, 15s
+processo = 'Corte Guilhotina de Polímeros'
+
+comprimento = record.c 
+largura = record.l
+
+if comprimento < 1000:
+    tc = 7/60 #Tempo em min
+else:
+    tc = 15/60 #Tempo em min
+    
+if largura < 1000:
+    tl = 7/60
+else:
+    tl = 15/60
+  
+tempo = ((tl * 2) + (tc* 2)) / 60 #Tempo em horas
+record.tempo_do_process = tempo #Salvando Tempo no Modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos ='\n Tempo de Corte para Cortes Menor que 1 metro (segundos): 7' + '\n Tempo de Corte para Cortes Maior que 1 metro (segundos): 15'
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo
+
+console.output = print_output

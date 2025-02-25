@@ -1,0 +1,16 @@
+#Tempo do processo de Corte Router é o perímetro a ser cortado, considerando 5 m de corte por minuto.
+processo = "Corte Router"
+
+perimetro = 2 * (record.c + record.l)  #perimetro em miímetros
+vel_corte = 5 # metros por minuto
+tempo = perimetro/1000 / vel_corte / 60 #tempo em horas
+
+record.tempo_do_process = tempo # Salvando dados no Modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Perímetro de Corte (mm): ' + str(perimetro) + '\n Velocidade de Corte (m/min): ' + str(vel_corte).replace(".", ",")
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

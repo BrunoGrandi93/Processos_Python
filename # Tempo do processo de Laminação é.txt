@@ -1,0 +1,17 @@
+# Tempo do processo de Laminação é de 3,34 minutos por m2 de área de ocupação
+processo = 'Laminação'
+
+vel_impressao = 3.34 # minutos por m²
+area = record.area_m2   #Área de Impressão
+tempo_setup = 5 # Tempo de setup em minutos
+
+tempo = area * vel_impressao / 60  # Tempo em Horas de impressão
+record.tempo_do_process = tempo #Salvando tempo no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = '\n Velocidade de Impressão (m²/min): ' + str(vel_impressao).replace(".", ",") + '\n Área de Impressão (m²): ' + str(area).replace(".", ",")
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

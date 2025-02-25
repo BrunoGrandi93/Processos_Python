@@ -1,0 +1,38 @@
+# Tempo do processo de Dobra Termo Moldada
+processo = 'Dobra Termo Moldada'
+
+quantidade = record.quantity_production #Pegando a quantidade de de peças que serão feitas na produção
+
+if quantidade < 200:
+  incrementoVF = (500/23.07) / quantidade #Custo do molde
+else:
+  incrementoVF = (1000/23.07) / quantidade #Custo do molde
+
+record.other_cost_item = record.other_cost_item + incrementoVF # Adicionando o Incremento no custo do molde no processo em outros custos
+
+qnt_peca = console.input("Quantidade de peças por molde que a máquina suporta simultaneamente?")
+qnt_peca = float(qnt_peca)
+
+TAChapa = 180 #'Tempo de aquecimento médio da chapa de PSAI 2mm.
+TMold = 120   #'Tempo de moldagem médio da chapa de PSAI 2mm.
+TResf = 40    #'Tempo de resfriação médio da chapa de PSAI 2mm.
+TSerra1 = 90  #'Tempo de corte médio para separação de cada peça.
+TSerra2 = 120 #'Tempo de corte médio para ajuste de altura de cada peça.
+
+print_info_1 = '\n Tempo de aquecimento médio da chapa de PSAI 2mm (s): ' + str(TAChapa)
+print_info_2 = '\n Tempo de moldagem médio da chapa de PSAI 2mm (s): ' + str(TMold)
+print_info_3 = '\n Tempo de resfriação médio da chapa de PSAI 2mm (s): ' + str(TResf)
+print_info_4 = '\n Tempo de corte médio para separação de cada peça (s): ' + str(TSerra1)
+print_info_5 = '\n Tempo de corte médio para ajuste de altura de cada peça (s): ' + str(TSerra2)
+print_info_6 = '\n Incremento na taxa hora do processo devido ao custo do molde (s): R$' + str(incrementoVF).replace(".", ",")
+
+tempo = (((TAChapa / qnt_peca) + (TMold / qnt_peca) + (TResf / qnt_peca) + TSerra1 + TSerra2) / 3600) + record.other_cost_item
+record.tempo_do_process = tempo #Salvar dados no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' \n Quantidade de peças por molde: ' + str(qnt_peca) + print_info_1 + print_info_2 + print_info_3 + print_info_4 + print_info_5 + print_info_6
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

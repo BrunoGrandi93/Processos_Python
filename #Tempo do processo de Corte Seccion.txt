@@ -1,0 +1,105 @@
+#Tempo do processo de Corte Seccionadora é o perímetro a ser cortado, considerando 2 m de corte por minuto (33,33 mm de corte por segundo).
+processo = "Corte Seccionadora"
+
+perimetro = 2 * (record.c + record.l)  #perimetro em miímetros
+
+indice = 0
+
+if perimetro <= 200:
+  indice = 0.0245
+  
+elif perimetro <= 300:
+  indice = 0.0364
+    
+elif perimetro <= 400:
+  indice = 0.0048
+      
+elif perimetro <= 500:
+  indice = 0.0604
+
+elif perimetro <= 600:
+  indice = 0.0724
+    
+elif perimetro <= 700:
+  indice = 0.0865
+
+elif perimetro <= 800:
+  indice = 0.0956
+
+elif perimetro <= 900:
+  indice = 0.1128
+    
+elif perimetro <= 1000:
+  indice = 0.1248
+      
+elif perimetro <= 1100:
+  indice = 0.1332
+  
+elif perimetro <= 1200:
+  indice = 0.1352
+    
+elif perimetro <= 1300:
+  indice = 0.1372
+      
+elif perimetro <= 1400:
+  indice = 0.1392
+  
+elif perimetro <= 1500:
+  indice = 0.1412
+    
+elif perimetro <= 1600:
+  indice = 0.1432
+      
+elif perimetro <= 1700:
+  indice = 0.1452
+ 
+elif perimetro <= 1800:
+  indice = 0.1472
+    
+elif perimetro <= 1900:
+  indice = 0.1492
+      
+elif perimetro <= 2000:
+  indice = 0.1512
+
+elif perimetro <= 2100:
+  indice = 0.1552
+
+elif perimetro <= 2200:
+  indice = 0.1592
+  
+elif perimetro <= 2300:
+  indice = 0.1632
+    
+elif perimetro <= 2400:
+  indice = 0.1672
+      
+elif perimetro <= 2500:
+  indice = 0.1712
+  
+elif perimetro <= 2600:
+  indice = 0.1752
+    
+elif perimetro <= 2700:
+  indice = 0.1792
+      
+elif perimetro <= 2800:
+  indice = 0.1832
+ 
+elif perimetro <= 2900:
+  indice = 0.1872
+    
+elif perimetro >= 3000:
+  indice = 0.1912
+
+tempo = indice
+
+record.tempo_do_process = tempo # Salvando dados no Modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Perímetro de Corte (mm): ' + str(perimetro) + '\n Perímetro (mm): ' + str(perimetro).replace(".", ",")
+print_tempo = ' Índice: ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

@@ -1,0 +1,21 @@
+# Corte CNC Laser Madeira
+processo = 'Corte CNC Laser Madeira'
+
+perimetro = console.input("Qual é o perímetro, em milímetros, da peça a ser cortada?")
+perimetro = float(perimetro)
+
+vel_corte = 4500 #milímetros/minuto
+pre_aquecimento = 0.033 #horas 
+n_passes = 2
+
+tempo = ((perimetro / vel_corte)/60 * n_passes) + pre_aquecimento #Calculo do tempo em Horas
+record.tempo_do_process = tempo   #Salvando tempo no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Perímetro de Corte (mm): ' + str(perimetro) + '\n Velocidade de Corte (mm/min): ' + str(vel_corte).replace(".", ",") + '\n Tempo de Pré-Aquecimento da Máquina (horas): ' + str(pre_aquecimento).replace(".", ",") + '\n Número de Passes: ' + str(n_passes)
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output
+

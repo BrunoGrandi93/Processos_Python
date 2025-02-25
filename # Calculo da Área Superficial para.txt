@@ -1,0 +1,61 @@
+# Calculo da Área Superficial para pintura em m2 de Acordo com o Tipo da Peça
+
+from math import pi as PI
+
+den = record.dens   #Pegar a densidedade/gramatura do intem
+dia = record.o/1000      #Pegar o diâmetro do item (Metro)
+esp = record.e/1000      #Pegar a espessura do item (Metro)
+comp = record.c/1000     #Pegar o comprimento do item (Metro)
+larg = record.l/1000     #Pegar a largura do item (Metro)
+alt = record.a/1000      #Pegar a altura do item (Metro)
+tipo = record.deep_manager_line_type_id.name
+
+### Caclular Área Superficial a partir do TIPO da Matéria Prima
+
+# ÁREA SUPERFICIAL DE PINTURA DE CHAPAS
+if tipo == 'Chapa':
+  area = 2 * comp * larg
+  
+# ÁREA SUPERFICIAL DE PINTURA DE PAPEIS
+elif tipo == 'Papel':
+  area = 2 * comp * larg
+  
+# ÁREA SUPERFICIAL DE PINTURA DE ARAMES  
+elif tipo == 'Arame':
+  area =  PI * dia * comp
+  
+# ÁREA SUPERFICIAL DE PINTURA DE TUBOS QUADRADOS E RETÂNGULARES  
+elif tipo == 'Tubo Quad/Ret':
+  area = comp * (2*larg + 2*alt)
+
+# ÁREA SUPERFICIAL DE PINTURA DE TUBOS REDENDOS  
+elif tipo == 'Tubo Redondo':
+  area = PI * dia * comp
+
+# ÁREA SUPERFICIAL DE PINTURA DE BARRA CHATAS
+elif tipo == 'Barra Chata':
+  area = 2 * comp * larg
+  
+# ÁREA SUPERFICIAL DE PINTURA DE BARRA REDONDAS
+elif tipo == 'Barra Redonda':
+  area =  PI * dia * comp
+
+# ÁREA SUPERFICIAL DE PINTURA DE CAIXAS
+elif tipo == 'Caixa':
+  area = 2*comp*larg + 2*comp*alt + 2*larg*alt
+
+# ÁREA SUPERFICIAL DE PINTURA DE BARRAS PERFIL
+elif tipo == 'Perfil':
+  area = comp * (2*larg + 2*alt) / 2
+
+else: # Tratamento de erro para quando não é encontrado o TIPO da peça
+  area = 0
+
+
+#Print Resultado 
+print_menu = ' ---- Calculo de Área Superficial para Pintura ------\n\n' + '\n' + ' Tipo de peça: ' + str(tipo) + '\n'
+print_area = '\n Área Superfical (m²): ' + str(area)
+
+
+console.output = print_menu + print_area
+record.superficial_area = area    #Salvar a massa do produto unitário na deep

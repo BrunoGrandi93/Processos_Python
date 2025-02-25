@@ -1,0 +1,30 @@
+# Tempo do processo de Colagem Manual de fitas é de 20 e de peças grandes é de 70 segundos.
+processo = 'Colagem Manual'
+
+choice = console.input("Digite o tipo de colagem desejado: newline newline  1- Colar fitas/itens pequenos newline 2- Colar letreiros/itens grandes" )
+choice = str(choice)
+
+if choice not in ('1', '2'):
+  invalid_option = True
+else:
+  invalid_option = False
+  if choice == '1':
+    tempo_peca = 20   #tempo por peça segundos, 20 segundos para embalar
+    tempo = tempo_peca/3600 
+    tipo_colagem = 'Fita'
+  else:
+    tempo_peca = 70  #tempo por peça segundos, 70 segundos para encaixotamento
+    tempo = tempo_peca/3600
+    tipo_colagem = 'Letreiros'
+  
+if invalid_option == True:
+  print_output = 'Não foi possível calcular o tempo de processo, pois foi digitado um número inválido'
+else:
+  record.tempo_do_process = tempo #Salvando tempo no Modelo
+  #Print Resultado
+  print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+  print_infos = '\n Tipo da Colagem: ' + tipo_colagem + '\n Tempo Padrão do Processo por Peça (seg): ' + str(tempo_peca).replace(".", ",")
+  print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+  print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

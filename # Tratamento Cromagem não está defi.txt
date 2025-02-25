@@ -1,0 +1,3 @@
+# Tratamento Cromagem não está definida metodologia de cálculo
+
+console.output = ' Não está defininida a metodologia de cálculo para esse processo. Favor estimar manualmente as horas deste processo.'

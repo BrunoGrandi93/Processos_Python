@@ -1,0 +1,19 @@
+# Corte CNC Laser Aço
+processo = 'Corte CNC Laser Aço'
+
+perimetro = console.input("Qual é o perímetro, em milímetros, da peça a ser cortada?")
+perimetro = float(perimetro)
+
+vel_corte = 6000 #milímetros/minuto
+pre_aquecimento = 0.015 #horas 
+
+tempo = (perimetro / vel_corte)/60 + pre_aquecimento #Calculo do tempo em Horas
+record.tempo_do_process = tempo   #Salvando tempo no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Perímetro de Corte (mm): ' + str(perimetro) + '\n Velocidade de Corte (mm/min): ' + str(vel_corte).replace(".", ",") + '\n Tempo de Pré-Aquecimento da Máquina (horas): ' + str(pre_aquecimento).replace(".", ",")
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

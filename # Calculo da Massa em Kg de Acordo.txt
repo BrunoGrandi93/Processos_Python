@@ -1,0 +1,177 @@
+# Calculo da Massa em Kg de Acordo com o Tipo da Peça 
+ 
+perg = console.input('Digite o número correspondente para execução do calculo newline newline 1- Itens Padrões [Chapa, Barra, Arame, etc...] newline 2- Tinta Eletrostática Geral newline 3- Tinta Eletrostática Texturizada newline 4- Perfil L de tubo newline 5- Perfil U de tubo') 
+ 
+tipo = record.deep_manager_line_type_id.name
+product_line = record.deep_manager_id.deep_manager_product_line_ids #Gravar o CDB Matéria prima do deep ID 
+from math import pi as PI 
+ 
+den = record.dens   #Pegar a densidedade/gramatura do intem 
+dia = record.o      #Pegar o diâmetro do item 
+esp = record.e      #Pegar a espessura do item 
+comp = record.c     #Pegar o comprimento do item 
+larg = record.l     #Pegar a largura do item 
+alt = record.a      #Pegar a altura do item 
+ 
+area_chapa = 0  #somador de área de pintura para chapa 
+area_arame = 0  #somador de área de pintura para arame 
+area_tubo = 0   #somador de área de pintura para tubos 
+ 
+### Calcular Massa a partir do Tipo da Matéria Prima 
+ 
+if perg == '1': 
+ 
+# MASSA DE CHAPAS 
+  if tipo == 'Chapa': 
+    massa = den * comp * larg * esp * 1/1000000   #massa = densidade(g/cm3) * comprimento (mm) * largura (mm) * espessura (mm)* conversão 
+    print_infos_extra = '-Informações da Peça Unitária- \nDensidade (g/cm³): ' + str(den) + '\nEspessura (mm): ' + str(esp) + '\nComprimento (mm): ' + str(comp) + '\nLargura (mm): ' + str(larg) 
+  else: 
+# MASSA DE PAPEIS 
+    if tipo == 'Papel': 
+      massa = den * comp * larg * 1/1000000   #massa = densidade(g/cm²) * comprimento (m) * largura (m) 
+      print_infos_extra = '-Informações da Peça Unitária- \nGramatura (g/cm²): ' + str(den) + '\nComprimento (mm): ' + str(comp) + '\nLargura (mm): ' + str(larg) 
+    else: 
+# MASSA DE ARAMES   
+      if tipo == 'Arame': 
+        massa = den * comp * PI * dia**2 / 4 * 1/1000000 # 0.0061653 * dia**2 * comp/1000 # OLD Version and maybe wrong? 
+        print_infos_extra = '-Informações da Peça Unitária- \nDensidade (g/cm³): ' + str(den) + '\nDiâmetro (mm): ' + str(dia) + '\nComprimento (mm): ' + str(comp) 
+      else: 
+# MASSA DE TUBOS QUADRADOS E RETÂNGULARES   
+        if tipo == 'Tubo Quad/Ret':  
+          massa = ((larg + larg + alt + alt) * comp /1000000) * esp * den 
+          print_infos_extra = '-Informações da Peça Unitária- \nDensidade (g/cm³): ' + str(den) + '\nEspessura (mm): ' + str(esp) + '\nComprimento (mm): ' + str(comp) + '\nLargura (mm): ' + str(larg) + '\nAltura (mm): ' + str(alt) 
+        else: 
+# MASSA DE TUBOS REDONDOS  
+          if tipo == 'Tubo Redondo': 
+            massa = den * PI * (dia - (dia - 2 * esp) / 4) * 2 * comp * 1/1000000 #Massa = dens*pi(diametro maior - diametro menor)^2 * comprimento * conversao 
+            print_infos_extra = '-Informações da Peça Unitária- \nDensidade (g/cm³): ' + str(den) + '\nDiâmetro (mm): ' + str(dia) + '\nEspessura (mm): ' + str(esp) + '\nComprimento (mm): ' + str(comp) 
+          else: 
+# MASSA DE BARRA CHATAS 
+            if tipo == 'Barra Chata': 
+              massa = den * comp * larg * esp * 1/1000000   #massa = densidade(g/cm3) * comprimento (mm) * largura (mm) * espessura (mm)* conversão 
+              print_infos_extra = '-Informações da Peça Unitária- \nDensidade (g/cm³): ' + str(den) + '\nEspessura (mm): ' + str(esp) + '\nComprimento (mm): ' + str(comp) + '\nLargura (mm): ' + str(larg) 
+            else: 
+# MASSA DE BARRA REDONDAS 
+              if tipo == 'Barra Redonda': 
+                massa = den * comp * PI * dia * 2 / 4 * 1/1000000 #massa = densidade(g/cm3) * comprimento (mm) * diâmetro (mm)^2 / 4 * conversão 
+                print_infos_extra = '-Informações da Peça Unitária- \nDensidade (g/cm³): ' + str(den) + '\nDiâmetro (mm): ' + str(dia) + '\nComprimento (mm): ' + str(comp) 
+              else: 
+# MASSA DE CAIXAS 
+                if tipo == 'Caixa': 
+                  massa = (2 * esp * dens * (comp * alt + comp * larg + larg * alt) - 4 * esp * 2 * dens * (comp + larg + alt)) * 1/1000000 #massa = soma das massa das 6 faces, menos uma vez que cada aresta se repete 
+                  print_infos_extra = '-Informações da Peça Unitária- \nDensidade (g/cm³): ' + str(den) + '\nEspessura (mm): ' + str(esp) + '\nComprimento (mm): ' + str(comp) + '\nLargura (mm): ' + str(larg) + '\nAltura (mm): ' + str(alt) 
+                else: 
+# MASSA DE BARRA PALLETS 
+                  if tipo == 'Pallet': 
+                    massa = 0 
+                    print_infos_extra = 'O calculo de massa para Pallet não está definido no sistema' 
+                  else: 
+# MASSA DE BARRAS PERFIL 
+                    if tipo == 'Perfil': 
+                      if perg == '4': #Calculo de passa para Perfil L 
+                        massa = (den * comp * esp * 2 * (alt * larg) - den * esp * 2 * comp * 4) * 1/2000000 
+                        print_infos_extra = '-Informações da Peça Unitária-' + '\nPerfil L\n' + '\nDensidade (g/cm³): ' + str(den) + '\nEspessura (mm): ' + str(esp) + '\nComprimento (mm): ' + str(comp) + '\nLargura (mm): ' + str(larg) + '\nAltura (mm): ' + str(alt) 
+                      elif perg == '5': #Calculo de passa para Perfil U 
+                        massa = (den * comp * esp * 2 * (alt * larg) - den * esp * 2 * comp * 4) * 1/2000000 
+                        print_infos_extra = '-Informações da Peça Unitária-' + '\nPerfil U\n' + '\nDensidade (g/cm³): ' + str(den) + '\nEspessura (mm): ' + str(esp) + '\nComprimento (mm): ' + str(comp) + '\nLargura (mm): ' + str(larg) + '\nAltura (mm): ' + str(alt) 
+                      else: #Caso não seja o tipo da peça seja 'Perfil', mas não definido se é perfil L ou U 
+                        massa = 0 
+                        print_infos_extra = 'ERRO!! Para calcular a massa de um Perfil é preciso selecionar se é um Perfil L ou U' 
+                     
+if perg == '2': 
+# MASSA DE TINTA LÍQUIDA   
+  if tipo == 'Tinta Líquida': 
+    product_line = record.deep_manager_id.deep_manager_product_line_ids #Gravar o CDB Matéria prima do deep ID 
+   
+  #Calcular somar todas as áreas de pintura de acordo com o tipo da peça 
+    area_chapa = 0  #somador de área de pintura para chapa 
+    for i in product_line:       #Loop dentro dos registros do BOM Lines do Deep 
+     seg_item = i.segmento           #Segmento do Material 
+     tipo_item = i.tipo             #Tipo do Material 
+     volume_p = i.production_volume  #Volume de Produção 
+     qnt = i.quantidade              #Quantidadade de itens produto Unitário 
+     area_pintura = i.superficial_area #Área de pintura do item unitário 
+     if tipo_item == 'Chapa' and seg_item == 'Marcenaria' : 
+      area_chapa = area_chapa + (area_pintura * qnt * volume_p)   #Incrementar somador caso por chapa 
+   
+    massa = area_chapa / 4.591368228 / record.quantidade / record.production_volume 
+  #Massa em Kg de Tinta em pó usada na Peça Unitária. Esse parametro está divido pelo Volume de Produção e pela Quantidade do Produto Unitário para ficar extatamente a quantidade me tinta necessária para a produção de 1 peça. 
+  #A massa total da Produção é encontrada na variável 'Massa Total Produção (Kg)' 
+    print_infos_extra = 'Área em M² de todas as CHAPAS de madeira pintadas na produção: ' + str(area_chapa) + '\n' 
+ 
+# MASSA DE VERNIZ 
+  if tipo == 'Verniz': 
+    product_line = record.deep_manager_id.deep_manager_product_line_ids #Gravar o CDB Matéria prima do deep ID 
+   
+  #Calcular somar todas as áreas de pintura de acordo com o tipo da peça 
+    area_chapa = 0  #somador de área de pintura para chapa 
+    for i in product_line:       #Loop dentro dos registros do BOM Lines do Deep 
+      seg_item = i.segmento           #Segmento do Material 
+      tipo_item = i.tipo              #Tipo do Material 
+      volume_p = i.production_volume  #Volume de Produçõa 
+      qnt = i.quantidade              #Quantidadade de itens produto Unitário 
+      area_pintura = i.superficial_area #Área de pintura do item unitário 
+      if tipo_item == 'Chapa' and seg_item == 'Marcenaria' : 
+        area_chapa = area_chapa + (area_pintura * qnt * volume_p)   #Incrementar somador caso por chapa 
+   
+      massa = area_chapa / 29.1545189504373 / record.quantidade / record.production_volume 
+  #Massa em Kg de Tinta em pó usada na Peça Unitária. Esse parametro está divido pelo Volume de Produção e pela Quantidade do Produto Unitário para ficar extatamente a quantidade me tinta necessária para a produção de 1 peça. 
+  #A massa total da Produção é encontrada na variável 'Massa Total Produção (Kg)' 
+      print_infos_extra = 'Área em M² de todas as CHAPAS de madeira pintadas na podução: ' + str(area_chapa) + '\n' 
+ 
+# MASSA DE TINTA EM PÓ 
+  if tipo == 'Tinta Pó':  
+    #if perg == '2': #Coeficiente para Pintura eletrostática Geral 
+     # c1 = 0.14 
+      #c2 = 0.24 
+    #elif perg == '3': #Coeficientes para Pintura eletrostática Texturizada 
+     # c1 = 0.17 
+      #c2 = 0.28 
+     
+    product_line = record.deep_manager_id.deep_manager_product_line_ids #Gravar o CDB Matéria prima do deep ID 
+   
+      #Calcular somar todas as áreas de pintura de acordo com o tipo da peça 
+    area_chapa = 0  #somador de área de pintura para chapa 
+    area_arame = 0  #somador de área de pintura para arame 
+    area_tubo = 0   #somador de área de pintura para tubos 
+   
+    for i in product_line:             #Loop dentro dos registros do BOM Lines do Deep 
+      seg_item = i.segmento           #Segmento do Material 
+      tipo_item = i.tipo             #Tipo do Material 
+      volume_p = i.production_volume  #Volume de Produção 
+      qnt = i.quantidade              #Quantidadade de itens produto Unitário 
+      area_pintura = i.superficial_area #Área de pintura do item unitário 
+     
+      if tipo_item == 'Chapa' and seg_item == 'Metal' : 
+        area_chapa = area_chapa + (area_pintura * qnt)   #Incrementar somador caso por chapa 
+       
+      elif tipo_item in ('Tubo Quad/Ret', 'Tubo Redondo', 'Barra Chata') and seg_item == 'Metal': 
+        area_tubo = area_tubo + (area_pintura * qnt)     #Incrementar somador caso por tubos 
+       
+      elif tipo_item in ('Arame','Barra Redonda') and seg_item == 'Metal': 
+        area_arame = area_arame + (area_pintura * qnt)   #Incrementar somador caso por arames 
+       
+    #Fim do Loop, areas totais pintura de todoa a produção já calculadas 
+ 
+      massa_pintura_chapa = area_chapa #Formula de calculo de tinta em Kg para área pintada de chapa em M² 
+      massa_pintura_tubos = area_tubo  #Formula de calculo de tinta em Kg para área pintada de tubos em M² 
+      massa_pintura_arame = area_arame #Formula de calculo de tinta em Kg para área pintada de arames em M² 
+   
+      info_1 = 'Área em M² de todas as CHAPAS metálicas pintadas na produção: ' + str(area_chapa) + '\n' 
+      info_2 = 'Área em M² de todas os TUBOS metálicas pintados na produção: ' + str(area_tubo) + '\n' 
+      info_3 = 'Área em M² de todas os ARAMES metálicas pintados na produção: ' + str(area_arame) + '\n' 
+   
+      print_infos_extra = info_1 + info_2 + info_3 
+   
+      massa = ((massa_pintura_chapa + (massa_pintura_tubos * 0.6) + (massa_pintura_arame * 0.24)) / 7 )  
+  #Massa em Kg de Tinta em pó usada na Peça Unitária. Esse parametro está divido pelo Volume de Produção e pela Quantidade do Produto Unitário para ficar exatamente a quantidade me tinta necessária para a produção de 1 peça. 
+  #A massa total da Produção é encontrada na variável 'Massa Total Produção (Kg)' 
+       
+ 
+#Print Resultado  
+print_menu = ' ---- Calculo de Massa ------\n\n + Seleção menu: ' + '\n' + ' Tipo de peça: ' + str(tipo) + '\n\n' 
+print_massa = '\n\n Massa Produto Unitário (Kg): ' + str(massa) 
+ 
+ 
+console.output = print_menu + print_infos_extra + print_massa 
+record.mass_kg = massa    #Salvar a massa do produto unitário na deep

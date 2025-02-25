@@ -1,0 +1,8 @@
+#Impressão Digital Rígido Durst
+processo = 'Impressão Digital Rígido Durst'
+
+quantidade = record.quantity_production
+tempo = 50 / quantidade
+
+record.tempo_do_process = tempo #Salvar dados no modelo
+console.output = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo +' \n Tempo: ' + str(float("{0:.8f}".format(tempo))).replace(".", ",") + ' horas'

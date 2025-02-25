@@ -1,0 +1,62 @@
+# Calculo da Volume em m3 de Acordo com o Tipo da Peça
+
+from math import pi as PI
+
+dia = record.o/1000      #Pegar o diâmetro do item (Metro)
+esp = record.e/1000      #Pegar a espessura do item (Metro)
+comp = record.c/1000     #Pegar o comprimento do item (Metro)
+larg = record.l/1000     #Pegar a largura do item (Metro)
+alt = record.a/1000      #Pegar a altura do item (Metro)
+tipo = record.deep_manager_line_type_id.name
+
+### Caclular Massa a partir do TIpo da Matéria Prima
+# VOLUME DE CHAPAS
+if tipo == 'Chapa':
+  vol = esp * comp * larg
+
+# VOLUME DE PAPEIS
+elif tipo == 'Papel':
+  vol = esp * comp * larg
+  
+# VOLUME DE ARAMES  
+elif tipo == 'Arame':
+  vol = PI * dia**2 / 4 * comp
+  
+# VOLUME DE TUBOS QUADRADOS E RETÂNGULARES  
+elif tipo == 'Tubo Quad/Ret':
+  vol = comp * larg * alt
+
+# VOLUME DE TUBOS REDENDOS  
+elif tipo == 'Tubo Redondo':
+  vol = PI * dia**2 / 4 * comp
+  
+# VOLUME DE BARRA CHATAS
+elif tipo == 'Barra Chata':
+  vol = esp * comp * larg
+  
+# VOLUME DE BARRA REDONDAS
+elif tipo == 'Barra Redonda':
+  vol = PI * dia**2 / 4 * comp
+
+# VOLUME DE CAIXAS
+elif tipo == 'Caixa':
+  vol = comp * larg * alt
+
+# VOLUME DE BARRA PALLETS
+elif tipo == 'Pallet':
+  vol = 0
+
+# VOLUME DE BARRAS PERFIL
+elif tipo == 'Perfil':
+  vol = comp * larg * alt / 2
+      
+else: # Tratamento de erro para quando não é encontrado o TIPO da peça
+  vol = 0
+
+
+#Print Resultado 
+print_menu = ' ---- Calculo de Volume da peça ------\n\n' + '\n' + ' Tipo de peça: ' + str(tipo) + '\n'
+print_vol = '\n Volume (m³): ' + str(vol)
+
+console.output = print_menu + print_vol
+record.vol_m3 = vol    #Salvar a massa do produto unitário na deep

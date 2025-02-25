@@ -1,0 +1,38 @@
+# O tempo gasto com embalagem em geral é definida de acordo com cada tipo de montagem
+processo = 'Embalagem'
+
+choice = console.input("Digite o número do tipo de embalagem desejado: newline newline 1- Embalar item pequeno newline newline 2- Encaixotar item pequeno newline newline 3- Embalar item grande newline newline 4- Encaixotar item grande" )
+choice = str(choice)
+
+if choice not in ('1', '2', '3', '4'):
+  invalid_option = True
+else:
+  invalid_option = False
+  if choice == '1':
+    tempo_peca = 180  #tempo por peça segundos, 180 segundos para embalar
+    tempo = tempo_peca/3600 
+    tipo_embal = 'Embalagem'
+  elif choice == '2':
+    tempo_peca = 300  #tempo por peça segundos, 300 segundos para encaixotamento
+    tempo = tempo_peca/3600
+    tipo_embal = 'Caixote'
+  elif choice == '3':
+    tempo_peca = 240  #tempo por peça segundos, 240 segundos para encaixotamento
+    tempo = tempo_peca/3600
+    tipo_embal = 'Caixote'
+  elif choice == '4':
+    tempo_peca = 600  #tempo por peça segundos, 600 segundos para encaixotamento
+    tempo = tempo_peca/3600
+    tipo_embal = 'Caixote'
+  
+if invalid_option == True:
+  print_output = 'Não foi possível calcular o tempo de processo, pois foi digitado um número inválido'
+else:
+  record.tempo_do_process = tempo #Salvando tempo no Modelo
+  #Print Resultado
+  print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+  print_infos = '\n Tipo de Embalagem: ' + tipo_embal + '\n Tempo Padrão do Processo por Peça (seg): ' + str(tempo_peca).replace(".", ",")
+  print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+  print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

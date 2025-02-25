@@ -1,0 +1,36 @@
+# Tempo do processo de Aplicar Primer é a área superficial de metal que será pintado, considerando a capacidade de 240 m² de pintura por turno.
+processo = 'Aplicar Primer'
+
+quantidade_peca = record.quantity_production
+vel_pintura = 22 # m² por hora
+tempo_setup = 1 # Tempo de setup em horas
+
+product_lines = record.deep_manager_id.deep_manager_product_line_ids #Gravar o CBD Matéria prima do deep ID
+  
+#Calcular somar todas as áreas de pintura de acordo com o tipo da peça
+area_chapa = 0  #somador de área de pintura para chapa
+
+for i in product_lines:       #Loop dentro dos registros do BOM Lines do Deep
+    seg_item = i.segmento           #Segmento do Material
+    tipo_item = i.tipo              #Tipo do Material
+    volume_p = i.production_volume  #Volume de Produção
+    qnt = i.quantidade              #Quantidadade de itens produto Unitário
+    area_pintura = i.superficial_area #Área de pintura do item unitário
+    
+    if tipo_item == 'Chapa' and seg_item == 'Marcenaria' :
+      area_chapa = area_chapa + (area_pintura * qnt)   #Incrementar somador caso por chapa
+      
+    #Fim do Loop, areas totais pintura de todoa a produção já calculadas
+
+area = area_chapa
+
+tempo = ((area / vel_pintura) * 2)+ (tempo_setup / quantidade_peca) # Tempo em Horas de impressão
+record.tempo_do_process = tempo #Salvando tempo no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = '\n Velocidade de Pintura (m²/min): ' + str(vel_pintura).replace(".", ",") + '\n Área de Pintura (m²): ' + str(area).replace(".", ",") + '\n Tempo de Setup (min): ' + str(tempo_setup)
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

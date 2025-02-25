@@ -1,0 +1,15 @@
+#Tempo do processo de Impressão Serigráfica 4x0 é de 240 segundos.
+processo = 'Impressão Serigráfica 4x0'
+
+tempo_peca = 240           #tempo por peça segundos
+tempo = tempo_peca/3600   #conversao para horas 
+
+record.tempo_do_process = tempo #Salvar dados no modelo
+
+#Print Resultado
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+print_infos = ' Tempo Padrão do Processo por Peça (seg): ' + str(tempo_peca).replace(".", ",")
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+
+console.output = print_output

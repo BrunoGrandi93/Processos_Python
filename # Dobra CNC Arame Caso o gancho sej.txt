@@ -1,0 +1,33 @@
+# Dobra CNC Arame: Caso o gancho seja o padrão, o tempo de processo de Dobra CNC de Gancho é 5s. Caso gancho não seja o padrão, é considerado 1,5 segundos por dobra no gancho
+processo = 'Dobra CNC Arame'
+
+choice = console.input("---- Menu ---- newline Digite o número da opção a seguir: newline newline  1- Dobra de Gancho Padrão newline  2- Outros casos newline newline *Caso escolha a segunda opção, digite, em seguida e separado por vírgula, o número de dobras do gancho. Exempo: 1 ou 2, 5")
+choice = eval('[' + choice + ']')
+escolha = str(choice[0])
+
+if escolha not in ('1', '2'):
+  print_output = ("Opção de escolha no menu inválida.")
+elif escolha == '1': #Gancho Padrão
+  temp_gpad = 5 # Tempo de Dobra de Gancho Padrão em Segundos
+  tempo = temp_gpad/3600
+  record.tempo_do_process = tempo #Salvando tempo de Processo
+  
+  #Print Resultado
+  print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+  print_infos = '\n Dobra de Gancho Padrão' + '\n Tempo de Dobra de Gancho Padrão (seg): ' + str(temp_gpad).replace(".", ",")
+  print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+  print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo
+else: #Ganho Personalizado
+  quantidade = choice[1]
+  quantidade = float(quantidade)
+  temp_gpad = 1.5
+  tempo = (temp_gpad * quantidade)/3600
+  record.tempo_do_process = tempo #Salvando tempo de Processo
+  
+  #Print Resultado
+  print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+  print_infos = '\n Gancho Personalizado' +  '\n Quantidade de Dobras: '+ str(quantidade).replace(".", ",") + '\n Tempo Gasto por Dobra (seg): ' + str(temp_gpad).replace(".", ",")
+  print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+  print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo 
+  
+console.output = print_output

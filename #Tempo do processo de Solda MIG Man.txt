@@ -1,0 +1,32 @@
+#Tempo do processo de Solda MIG Manual descrito abaixo: 
+processo = 'Solda MIG Manual' 
+ 
+vel_solda = console.input("Selecione a Velocidade de Soldagem: newline newline  - Digite 1 para lento newline - Digite 2 para rápido") 
+comprimento_solda = console.input("Digite, em milímetros (mm), o comprimento da solda [ponto de solta 3mm]:") 
+quant_pt_solda = console.input("Digite a quantidade de pontos de soldas: ") 
+num_tombos = console.input("Digite o número de tombos para soldar a peça:") 
+ 
+vel_solda = str(vel_solda) 
+comprimento_solda = float(comprimento_solda) 
+quant_pt_solda = float(quant_pt_solda) 
+num_tombos = float(num_tombos) 
+ 
+vel_solda = str(vel_solda) 
+if vel_solda not in ('1', '2'): 
+  vel_solda = '1' 
+ 
+if vel_solda == '1': 
+  vel_solda = 0.1 # metros/ minuto 
+else: 
+  vel_solda = 0.2 # metros/ minuto 
+   
+tempo = (comprimento_solda/1000/0.506 * quant_pt_solda + comprimento_solda/1000*quant_pt_solda/vel_solda + num_tombos*0.01667)/60 
+record.tempo_do_process = tempo #Salvando tempo no Modelo 
+ 
+#Print Resultado 
+print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo 
+print_infos = '\nParametros de Soldagem: \n 1- Velocidade de Soldagem: ' + str(vel_solda) + '\n 2- Comprimento da solda: ' + str(comprimento_solda) + '\n 3- Quantidade de pontos de solda: ' + str(quant_pt_solda) + '\n 4- Número de tombos: ' + str(num_tombos) 
+print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",") 
+print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo  
+ 
+console.output = print_output

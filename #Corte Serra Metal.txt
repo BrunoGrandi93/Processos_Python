@@ -1,0 +1,82 @@
+#Descrição
+processo = 'Corte Serra Metal'
+
+from math import pi as PI
+
+# Tipo da peça
+tipo_peca = record.tipo
+
+
+#Input do Usuário
+resposta = console.input('Digite, separado por vírgula: newline newline 1º - Quantidade de cortes realizado newline 2º - Número de chanfros/angulos no tubo newline newline Exemplo: 2,5  newline 2 cortes e 5 chanfros')
+
+erro_tipo = False
+#Calculo do tempo de acordo com a pergunta
+if tipo_peca == "Arame":
+  #Tempo de Corte para Arame considera 0,032857143 minutos por mm de corte e 0,92666667 minutos para posicionamento quando se tem chanfros.
+  n_corte = float(resposta[0])
+  n_chanfro = float(resposta[2])
+  diametro = record.o
+  tempo = (diametro * 0.032857 + n_chanfro * diametro * 0.032857 + n_chanfro * 0.926667) / 60
+  print_infos = '\n Tipo da peça: ' + tipo_peca + '\n Número de Cortes: ' + str(n_corte) + '\n Número de Chanfros: ' + str(n_chanfro) + '\n Diâmetro do Arame (mm): ' + str(diametro)
+  
+elif tipo_peca == "Barra Chata":
+  #Tempo de Corte para Barra Chata considera 0,0003147 minutos por mm de corte.
+  n_corte = float(resposta[0])
+  n_chanfro = float(resposta[2])
+  espessura = record.e
+  largura = record.l
+  tempo = ((largura * espessura * 0.0003147 + n_chanfro * largura * espessura * 0.0003147) * n_corte) / 60
+  print_infos = 'Tipo da peça: ' + tipo_peca + '\n Número de Cortes: ' + str(n_corte) + '\n Número de Chanfros: ' + str(n_chanfro) + '\n Espessura da Barra (mm): ' + str(espessura) + ' \n Largura da Barra (mm): ' + str(largura)
+
+elif tipo_peca == "Barra Redonda":
+  #Tempo de Corte para Arame considera 0,032857143 minutos por mm de corte e 0,92666667 minutos para posicionamento quando se tem chanfros.
+  n_corte = float(resposta[0])
+  n_chanfro = float(resposta[2])
+  diametro = record.o
+  tempo = ((diametro * 0.032857 + n_chanfro * diametro * 0.032857 + n_chanfro * 0.926667) * n_corte) / 60
+  print_infos = '\n Tipo da peça: ' + tipo_peca + '\n Número de Cortes: ' + str(n_corte) + '\n Número de Chanfros: ' + str(n_chanfro) + '\n Diâmetro da Barra Redonda (mm): ' + str(diametro)
+
+elif tipo_peca == "Perfil":
+  #Tempo de Corte para Perfil considera 0,0003147 minutos por mm de corte.
+  n_corte = float(resposta[0])
+  n_chanfro = float(resposta[2])
+  altura = record.a
+  largura = record.l
+  tempo = ((largura * altura *0.0003147 + n_chanfro * largura * altura * 0.0003147) * n_corte) / 60
+  print_infos = '\n Tipo da peça: ' + tipo_peca + '\n Número de Cortes: ' + str(n_corte) + '\n Número de Chanfros: ' + str(n_chanfro) + '\n Altura do Perfil (mm): ' + str(altura) + ' \n Largura do Perfil (mm): ' + str(largura)
+
+elif tipo_peca == "Tubo Quad/Ret":
+  #Tempo de Corte para Tubo Quadrado / Retangular considera 0,0003147 minutos por mm de corte.
+  n_corte = float(resposta[0])
+  n_chanfro= float(resposta[2])
+  altura = record.a
+  largura = record.l
+  tempo = ((largura * altura * 0.0003147 + n_chanfro * largura * altura * 0.0003147) * n_corte) / 60
+  print_infos = '\n Tipo da peça: ' + tipo_peca + '\n Número de Cortes: ' + str(n_corte) + '\n Número de Chanfros: ' + str(n_chanfro) + '\n Altura do Tubo (mm): ' + str(altura) + ' \n Largura do Tubo (mm): ' + str(largura)
+
+elif tipo_peca == "Tubo Redondo":
+  #Tempo de Corte para Tubo Circular considera 0,0003147 minutos por mm de corte.
+  n_corte = float(resposta[0])
+  n_chanfro= float(resposta[2])
+  diametro = record.o
+  tempo = (((((PI * diametro/2)**2) * 0.0003147) + (((n_chanfro * PI * diametro/2)**2) * 0.0003147)) * n_corte)/60
+  print_infos = '\n Tipo da peça: ' + tipo_peca + '\n Número de Cortes: ' + str(n_corte) + '\n Número de Chanfros: ' + str(n_chanfro) + '\n Diâmetro do Tubo (mm): ' + str(diametro)
+
+else:
+  erro_print = 'O TIPO da peça: ' + tipo_peca + ', não está definido para os calculos. \n\n Apenas os tipos: Arames, Barra Chata, Barra Redonda, Perfil, Tubo Quad/Ret, Tubo Redondo, estão programados para cálculos.'
+  erro_tipo = True
+  
+  
+if erro_tipo == False:
+  #Print Resultado
+  print_menu = ' ---- Calculo do Tempo do Processo Para Peça Unitária ------\n Processo: '+ processo
+  print_tempo = ' Tempo Salvo (Horas): ' + str(float("{0:.8f}".format(tempo))).replace(".", ",")
+  print_output = print_menu + '\n' + print_infos + '\n\n' + print_tempo
+  
+  record.tempo_do_process = tempo #Salvar dados no modelo
+else:
+  print_output = erro_print
+
+
+console.output = print_output
